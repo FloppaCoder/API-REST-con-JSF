@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Payara 5" type="PayaraServerConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="Payara 5" ALTERNATIVE_JRE_ENABLED="false">
+    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/DWF404_AmayaEleazar_CruzMarcelo-1.0-SNAPSHOT/faces/index.xhtml" />
     <option name="UPDATING_POLICY" value="hot-swap-classes" />
     <deployment>
       <artifact name="DWF404_AmayaEleazar_CruzMarcelo:war">
