@@ -34,26 +34,27 @@ public class InsumoMedRest {
 
             InsumoMed selectedInsumo = dao.getDetails(id);
 
-            if(selectedInsumo == null){
-                return Response.status(404).build();
+            if(selectedInsumo == null || selectedInsumo.getId() == 0){
+                return Response.status(404).header("Access-Control-Allow-Origin", "*")
+                        .entity("Insumo no encontrado").build();
             }
 
             return Response.status(200).entity(selectedInsumo).build();
         }
 
-
     @POST //@DELETE
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("delete/{id}")
-    public Response deleteInsumoMed(@PathParam("id") int id) throws SQLException{
-        InsumoMedDAO dao = new InsumoMedDAO();
-        InsumoMed selectedInsumo = dao.getDetails(id);
+        @Produces(MediaType.APPLICATION_JSON)
+        @Path("delete/{id}")
+        public Response eliminarConcepto(@PathParam("id") int id) throws SQLException{
+            InsumoMedDAO dao = new InsumoMedDAO();
+            InsumoMed insumoMed = dao.getDetails(id);
 
-        if(selectedInsumo == null){
-            return Response.status(400).entity("El insumo seleccionado no se encuentra en existencias").header("Access-Control-Allow-Origin", "*").build();
+            if(insumoMed == null){
+                return Response.status(400)
+                        .entity("El insumo seleccionado no existe").header("Access-Control-Allow-Origin", "*").build();
+            }
+            dao.deleteInsumo(id);
+            return Response.status(200)
+                    .header("Access-Control-Allow-Origin", "*").entity(insumoMed).build();
         }
-
-        dao.deleteInsumo(id);
-        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(selectedInsumo).build();
-    }
 }
