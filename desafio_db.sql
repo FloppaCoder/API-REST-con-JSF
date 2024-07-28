@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 28-07-2024 a las 06:10:48
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 28-07-2024 a las 06:48:26
+-- Versión del servidor: 8.2.0
+-- Versión de PHP: 8.2.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,12 +27,14 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `insumos_medicos`
 --
 
-CREATE TABLE `insumos_medicos` (
-  `Id` int(11) NOT NULL,
-  `Nombre` varchar(100) NOT NULL,
-  `Cantidad` int(3) NOT NULL,
-  `Precio` double(3,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+DROP TABLE IF EXISTS `insumos_medicos`;
+CREATE TABLE IF NOT EXISTS `insumos_medicos` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `Cantidad` int NOT NULL,
+  `Precio` double(4,2) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `insumos_medicos`
@@ -40,27 +42,9 @@ CREATE TABLE `insumos_medicos` (
 
 INSERT INTO `insumos_medicos` (`Id`, `Nombre`, `Cantidad`, `Precio`) VALUES
 (1, 'Mascarillas quirúrgicas', 40, 3.50),
-(2, 'Alcohol gel', 22, 2.45);
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `insumos_medicos`
---
-ALTER TABLE `insumos_medicos`
-  ADD PRIMARY KEY (`Id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `insumos_medicos`
---
-ALTER TABLE `insumos_medicos`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+(2, 'Alcohol gel', 22, 2.45),
+(3, 'El Contexto', 69, 9.50),
+(4, 'Void meme', 1, 99.99);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

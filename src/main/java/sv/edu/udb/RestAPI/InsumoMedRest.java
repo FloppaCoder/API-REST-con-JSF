@@ -3,12 +3,7 @@ import sv.edu.udb.model.InsumoMedDAO;
 
 import java.sql.SQLException;
 import java.util.List;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import sv.edu.udb.model.InsumoMed;
@@ -16,6 +11,28 @@ import sv.edu.udb.model.InsumoMed;
 @Path("insumoMed") // Asignando ruta para acceder a la API Rest
 
 public class InsumoMedRest {
+
+    InsumoMedDAO insumoMedDAO = new InsumoMedDAO();
+
+    @POST // Petición POST agregar nuevo insumo
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addInsumo(
+            @FormParam("nombre") String nombre,
+            @FormParam("cantidad") int cantidad,
+            @FormParam("precio") double precio
+    ) throws SQLException{
+        InsumoMed insumoMed = new InsumoMed();
+
+        insumoMed.setNombre(nombre);
+        insumoMed.setCantidad(cantidad);
+        insumoMed.setPrecio(precio);
+        insumoMedDAO.addInsumo(insumoMed);
+
+        return Response.status(201)
+                .header("Access-Control-Allow-Origin", "*")
+                .entity(insumoMed)
+                .build();
+    }
 
     @GET // Petición GET
         @Produces(MediaType.APPLICATION_JSON)

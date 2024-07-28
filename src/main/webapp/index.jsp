@@ -2,11 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Insumos Medicos API REST</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
+<h1><%= "Hello Worldd!" %>
 </h1>
+<h1>Hola cacerola</h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 </body>
