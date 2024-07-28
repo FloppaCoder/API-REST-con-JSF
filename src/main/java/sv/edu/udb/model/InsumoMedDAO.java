@@ -45,7 +45,7 @@ public class InsumoMedDAO extends AppConnection {
         return listadoInsumos;
     }
 
-    //OBTENER Insumos por ID
+    //OBTENER Insumo por ID
     public InsumoMed getDetails(int id) throws SQLException { // Consultar un registro específico
         InsumoMed selectedInsumo = new InsumoMed();
         connect();
@@ -65,8 +65,19 @@ public class InsumoMedDAO extends AppConnection {
         return selectedInsumo;
     }
 
+    //ACTUALIZAR Insumo por ID
+    public void updateInsumo(InsumoMed insumoMed) throws SQLException{
+        connect();
+        pstmt = conn.prepareStatement("UPDATE insumos_medicos set Nombre = ?, Cantidad = ?, Precio = ? WHERE Id = ?");
+        pstmt.setString(1, insumoMed.getNombre());
+        pstmt.setInt(2, insumoMed.getCantidad());
+        pstmt.setDouble(3, insumoMed.getPrecio());
+        pstmt.setInt(4, insumoMed.getId());
+        pstmt.executeUpdate();
+        close();
+    }
 
-    //ELIMINAR Insumos por ID
+    //ELIMINAR Insumo por ID
     public void deleteInsumo(int id) throws SQLException {
         connect();
         pstmt = conn.prepareStatement("DELETE FROM insumos_medicos WHERE id = ?");

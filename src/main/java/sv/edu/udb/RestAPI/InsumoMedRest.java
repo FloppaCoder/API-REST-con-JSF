@@ -16,6 +16,7 @@ public class InsumoMedRest {
 
     @POST // Petición POST agregar nuevo insumo
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("create")
     public Response addInsumo(
             @FormParam("nombre") String nombre,
             @FormParam("cantidad") int cantidad,
@@ -58,6 +59,36 @@ public class InsumoMedRest {
 
             return Response.status(200).entity(selectedInsumo).build();
         }
+
+    @POST //@ACTUALIZAR | Petición POST para actualizar un insumo existente
+        @Produces(MediaType.APPLICATION_JSON)
+        @Path("update/{id}")
+        public Response updateInsumo(
+                @PathParam("id") int id,
+                @FormParam("nombre") String nombre,
+                @FormParam("cantidad") int cantidad,
+                @FormParam("precio") double precio
+        ) throws SQLException{
+
+        InsumoMed insumoMed = insumoMedDAO.getDetails(id);
+
+        if (insumoMed == null || insumoMed.getId() == 0){
+            return Response.status(404)
+                    .header("Access-Control-Allow-Origin", "*")
+                    .entity("Insumo no encontrado")
+                    .build();
+        }
+
+        insumoMed.setNombre(nombre);
+        insumoMed.setCantidad(cantidad);
+        insumoMed.setPrecio(precio);
+        insumoMedDAO.updateInsumo(insumoMed);
+
+        return Response.status(200)
+                .header("Access-Control-Allow-Origin", "*")
+                .entity(insumoMed)
+                .build();
+    }
 
     @POST //@DELETE
         @Produces(MediaType.APPLICATION_JSON)
