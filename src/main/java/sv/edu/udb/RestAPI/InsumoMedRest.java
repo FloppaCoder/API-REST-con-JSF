@@ -4,6 +4,8 @@ import sv.edu.udb.model.InsumoMedDAO;
 import java.sql.SQLException;
 import java.util.List;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -38,4 +40,20 @@ public class InsumoMedRest {
 
             return Response.status(200).entity(selectedInsumo).build();
         }
+
+
+    @POST //@DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("delete/{id}")
+    public Response deleteInsumoMed(@PathParam("id") int id) throws SQLException{
+        InsumoMedDAO dao = new InsumoMedDAO();
+        InsumoMed selectedInsumo = dao.getDetails(id);
+
+        if(selectedInsumo == null){
+            return Response.status(400).entity("El insumo seleccionado no se encuentra en existencias").header("Access-Control-Allow-Origin", "*").build();
+        }
+
+        dao.deleteInsumo(id);
+        return Response.status(200).header("Access-Control-Allow-Origin", "*").entity(selectedInsumo).build();
+    }
 }
