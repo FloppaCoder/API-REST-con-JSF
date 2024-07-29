@@ -3,7 +3,7 @@ MediSupply es un proyecto web desarrollado en el ámbito de un proyecto estudian
 
 Además, el proyecto incluye el desarrollo de una API REST, que permite realizar consultas sobre los insumos médicos a través de URL. Esta API facilita la integración con otros sistemas y servicios, permitiendo una gestión más flexible y accesible de los datos. La API REST es una parte integral del sistema, proporcionando una forma estándar de interactuar con la base de datos de insumos médicos desde cualquier aplicación o servicio externo.
 
-> Para una explicación del proyecto acceder a la carpeta `utils` ubicada en la raíz y ver el vídeo
+> Para una explicación del proyecto acceder al siguiente vídeo `https://drive.google.com/file/d/1-vLM6ySn1cGZeJ54N_B3BOBNFCIdvJcM/view?usp=drive_link`
 
 ## Componentes utilizados ⚒️
 
