@@ -4,25 +4,89 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
-    <title>Actualizar Insumo</title>
+    <title>MediSupply | Actualizar Insumo</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com" type=""></script>
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <!-- Libreria AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></link>
+    <!-- Iconos -->
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-straight/css/uicons-regular-straight.css'></link>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-rounded/css/uicons-regular-rounded.css'></link>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-rounded/css/uicons-regular-rounded.css'></link>
 </h:head>
-<h:body>
-    <h:form id="updateInsumoForm">
-        <h:panelGrid columns="2">
-            <h:outputLabel for="nombre" value="Nombre:" />
-            <h:inputText id="nombre" value="#{insumoMedBean.selectedInsumo.nombre}" />
+<h:body styleClass="bg-white" class="bg-white">
+    <nav class="bg-teal-600 top-0 left-0 w-full z-10" id="navbarHomepage">
+        <ul
+                class="text-white text-lg mx-auto flex flex-col md:flex-row items-center justify-between px-[8rem] gap-5 md:gap-5 py-1">
+            <h:link outcome="/index.xhtml">
+                <li class="flex flex-row items-center font-bold text-2xl"><img src="resources/img/medisupply.png"
+                                                                               alt="loguito" class="w-[5rem]"></img>
+                    MediSupply
+                </li>
+            </h:link>
+            <div class="flex flex-col md:flex-row items-center md:gap-[2rem] gap-5">
+                <h:link outcome="/insumos.xhtml">
+                    <li class="justify-self-end bg-white hover:bg-zinc-200 text-black px-3 py-2 rounded-md hidden md:block" id="navbarBgLi">
+                        Ver Insumos</li>
+                </h:link>
 
-            <h:outputLabel for="cantidad" value="Cantidad:" />
-            <h:inputText id="cantidad" value="#{insumoMedBean.selectedInsumo.cantidad}" />
+                <h:link outcome="/verApi.xhtml">
+                    <li class="hidden md:block bg-black bg-opacity-40 hover:bg-gray-950 px-3 py-2 rounded-md">Ver más acerca de la API</li>
+                </h:link>
+            </div>
+        </ul>
+    </nav>
+    <div class="bg-white min-h-screen">
+        <div class="w-full max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg" data-aos="fade-down" data-aos-delay="300">
+            <h2 class="text-2xl font-bold text-center text-teal-600 mb-6">Actualizar Insumo</h2>
+            <h:form id="updateInsumoForm" class="space-y-4">
+                <div class="flex flex-col">
+                    <h:outputLabel for="nombre" value="Nombre:" class="font-medium text-lg"/>
+                    <h:inputText id="nombre" value="#{insumoMedBean.selectedInsumo.nombre}" styleClass="input input-bordered w-full bg-zinc-300 text-black"/>
+                </div>
+                <div class="flex flex-col">
+                    <h:outputLabel for="cantidad" value="Cantidad:" class="font-medium text-lg"/>
+                    <h:inputText id="cantidad" value="#{insumoMedBean.selectedInsumo.cantidad}" styleClass="input input-bordered w-full bg-zinc-300 text-black"/>
+                </div>
+                <div class="flex flex-col">
+                    <h:outputLabel for="precio" value="Precio:" class="font-medium text-lg"/>
+                    <h:inputText id="precio" value="#{insumoMedBean.selectedInsumo.precio}" styleClass="input input-bordered w-full bg-zinc-300 text-black"/>
+                </div>
+                <div class="flex justify-between mt-6">
+                    <h:commandButton value="Actualizar" action="#{insumoMedBean.updateInsumo}" styleClass="btn btn-success text-white"/>
+                    <h:commandButton value="Limpiar" action="#{insumoMedBean.clearForm}" styleClass="btn btn-warning text-white"/>
+                    <h:commandButton value="Cancelar" action="insumos?faces-redirect=true" styleClass="btn btn-error text-white"/>
+                </div>
+            </h:form>
+        </div>
+    </div>
 
-            <h:outputLabel for="precio" value="Precio:" />
-            <h:inputText id="precio" value="#{insumoMedBean.selectedInsumo.precio}" />
-        </h:panelGrid>
-        <br/>
-        <h:commandButton value="Actualizar" action="#{insumoMedBean.updateInsumo}" />
-        <h:commandButton value="Limpiar" action="#{insumoMedBean.clearForm}" />
-        <h:commandButton value="Cancelar" action="insumos?faces-redirect=true" />
-    </h:form>
+
+    <footer  class="footer footer-center text-white p-5 bg-teal-600 text-primary-content">
+        <aside>
+            <div class="flex flex-row items-center font-bold text-4xl"><img src="resources/img/medisupply.png" alt="loguito" class="w-[5rem]"></img>
+                MediSupply
+            </div>
+
+            <p class="">Desarrollo con Web Frameworks - Ciclo 2 2024</p>
+            <p class="font-bold mt-2">
+                Carlos Marcelo Cruz Menjívar | CM232707<br></br>
+            </p>
+            <p class="font-bold">
+                Eleazar Hazael Amaya Sánchez | AS232697
+            </p>
+
+            <p class="mt-2">Copyright © 2024 - Todos los Derechos Reservados</p>
+        </aside>
+    </footer>
+
+    <!-- Libreria AOS -->
+    <script type="" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="">
+        AOS.init();
+    </script>
 
 </h:body>
 </html>
