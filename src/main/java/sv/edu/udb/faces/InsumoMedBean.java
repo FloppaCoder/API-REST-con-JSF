@@ -1,8 +1,8 @@
 package sv.edu.udb.faces;
 
-import sv.edu.udb.model.InsumoMed;
-
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import jakarta.ws.rs.client.Client;
@@ -12,6 +12,9 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import sv.edu.udb.model.InsumoMed;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,6 +26,9 @@ public class InsumoMedBean implements Serializable {
     private WebTarget target;
     private List<InsumoMed> insumos;
     private InsumoMed selectedInsumo;
+    private String mensajeError;
+    private boolean addMode = true;
+    private boolean updateMode = false;
 
     @PostConstruct
     public void init() {
@@ -36,9 +42,13 @@ public class InsumoMedBean implements Serializable {
         Response response = target.request(MediaType.APPLICATION_JSON).get();
         if (response.getStatus() == 200) {
             insumos = response.readEntity(new GenericType<List<InsumoMed>>() {});
+            if (insumos.isEmpty()) {
+                mensajeError = "No hay registros";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, mensajeError, null));
+            }
         } else {
-            // Manejar error
-            System.out.println("Error al cargar insumos: " + response.getStatus());
+            mensajeError = "Error al cargar insumos";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, mensajeError, null));
         }
         response.close();
     }
@@ -49,12 +59,21 @@ public class InsumoMedBean implements Serializable {
                 .post(Entity.json(selectedInsumo));
         if (response.getStatus() == 201) {
             loadInsumos(); // Recargar la lista después de agregar
+            clearForm();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insumo agregado correctamente", null));
+            // Redirigir a insumos.xhtml
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("insumos.xhtml");
+            } catch (IOException e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al redirigir", null));
+            }
         } else {
-            // Manejar error
-            System.out.println("Error al agregar insumo: " + response.getStatus());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al agregar insumo", null));
         }
         response.close();
     }
+
+
 
     public void updateInsumo() {
         Response response = target.path("update/" + selectedInsumo.getId())
@@ -62,9 +81,10 @@ public class InsumoMedBean implements Serializable {
                 .post(Entity.json(selectedInsumo));
         if (response.getStatus() == 200) {
             loadInsumos(); // Recargar la lista después de actualizar
+            clearForm();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insumo actualizado correctamente", null));
         } else {
-            // Manejar error
-            System.out.println("Error al actualizar insumo: " + response.getStatus());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al actualizar insumo", null));
         }
         response.close();
     }
@@ -76,10 +96,32 @@ public class InsumoMedBean implements Serializable {
         if (response.getStatus() == 200) {
             loadInsumos(); // Recargar la lista después de eliminar
         } else {
-            // Manejar error
-            System.out.println("Error al eliminar insumo: " + response.getStatus());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al eliminar insumo", null));
         }
         response.close();
+    }
+
+    public String prepareEdit(int id) {
+        Response response = target.path(String.valueOf(id))
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+
+        if (response.getStatus() == 200) {
+            selectedInsumo = response.readEntity(InsumoMed.class);
+            return "editInsumo?faces-redirect=true"; // Redirige a editInsumo.xhtml
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Insumo no encontrado", null));
+            return null;
+        }
+    }
+
+
+
+
+    public void clearForm() {
+        selectedInsumo = new InsumoMed(); // Limpia el formulario
+        addMode = true;
+        updateMode = false;
     }
 
     // Getters y Setters
@@ -98,5 +140,31 @@ public class InsumoMedBean implements Serializable {
 
     public void setSelectedInsumo(InsumoMed selectedInsumo) {
         this.selectedInsumo = selectedInsumo;
+        this.addMode = false;
+        this.updateMode = true;
+    }
+
+    public String getMensajeError() {
+        return mensajeError;
+    }
+
+    public void setMensajeError(String mensajeError) {
+        this.mensajeError = mensajeError;
+    }
+
+    public boolean isAddMode() {
+        return addMode;
+    }
+
+    public void setAddMode(boolean addMode) {
+        this.addMode = addMode;
+    }
+
+    public boolean isUpdateMode() {
+        return updateMode;
+    }
+
+    public void setUpdateMode(boolean updateMode) {
+        this.updateMode = updateMode;
     }
 }

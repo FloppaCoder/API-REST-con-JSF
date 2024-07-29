@@ -7,42 +7,40 @@
     <title>Gestión de Insumos</title>
 </h:head>
 <h:body>
-    <h:form id="insumoForm">
-        <h:dataTable value="#{insumoMedBean.insumos}" var="insumo" border="1">
-            <h:column>
-                <f:facet name="header">ID</f:facet>
-                #{insumo.id}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Nombre</f:facet>
-                #{insumo.nombre}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Cantidad</f:facet>
-                #{insumo.cantidad}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Precio</f:facet>
-                #{insumo.precio}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Acciones</f:facet>
-                <h:commandButton value="Editar" action="#{insumoMedBean.setSelectedInsumo(insumo)}"/>
-                <h:commandButton value="Eliminar" action="#{insumoMedBean.deleteInsumo(insumo.id)}"/>
-            </h:column>
-        </h:dataTable>
-        <br/>
-        <h:panelGrid columns="2">
-            <h:outputLabel for="nombre" value="Nombre:" />
-            <h:inputText id="nombre" value="#{insumoMedBean.selectedInsumo.nombre}" />
-            <h:outputLabel for="cantidad" value="Cantidad:" />
-            <h:inputText id="cantidad" value="#{insumoMedBean.selectedInsumo.cantidad}" />
-            <h:outputLabel for="precio" value="Precio:" />
-            <h:inputText id="precio" value="#{insumoMedBean.selectedInsumo.precio}" />
-        </h:panelGrid>
-        <br/>
-        <h:commandButton value="Agregar" action="#{insumoMedBean.addInsumo}" />
-        <h:commandButton value="Actualizar" action="#{insumoMedBean.updateInsumo}" />
+    <!-- Botón para redirigir a la página de agregar insumo -->
+    <h:form>
+        <h:commandButton value="Agregar Nuevo Insumo" action="addInsumo.xhtml" />
     </h:form>
+
+    <h:dataTable value="#{insumoMedBean.insumos}" var="insumo" border="1">
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            #{insumo.id}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Nombre</f:facet>
+            #{insumo.nombre}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Cantidad</f:facet>
+            #{insumo.cantidad}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Precio</f:facet>
+            #{insumo.precio}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Acciones</f:facet>
+            <h:commandButton value="Editar" action="#{insumoMedBean.prepareEdit(insumo.id)}"
+                             outcome="editInsumo"/>
+            <h:commandButton value="Eliminar" action="#{insumoMedBean.deleteInsumo(insumo.id)}"/>
+        </h:column>
+    </h:dataTable>
+
+    <!-- Fila para mostrar el mensaje si no hay registros -->
+    <h:panelGroup rendered="#{empty insumoMedBean.insumos}">
+        <h:outputText value="#{insumoMedBean.mensajeError}" styleClass="error-message" />
+    </h:panelGroup>
+
 </h:body>
 </html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+   <title>Agregar Insumo</title>
+</h:head>
+<h:body>
+   <h:form id="addInsumoForm">
+      <h:panelGrid columns="2">
+         <h:outputLabel for="nombre" value="Nombre:" />
+         <h:inputText id="nombre" value="#{insumoMedBean.selectedInsumo.nombre}" />
+
+         <h:outputLabel for="cantidad" value="Cantidad:" />
+         <h:inputText id="cantidad" value="#{insumoMedBean.selectedInsumo.cantidad}" />
+
+         <h:outputLabel for="precio" value="Precio:" />
+         <h:inputText id="precio" value="#{insumoMedBean.selectedInsumo.precio}" />
+      </h:panelGrid>
+      <br/>
+      <h:commandButton value="Agregar" action="#{insumoMedBean.addInsumo}" />
+      <h:commandButton value="Limpiar" action="#{insumoMedBean.clearForm}" />
+      <h:commandButton value="Cancelar" action="insumos?faces-redirect=true" />
+   </h:form>
+</h:body>
+</html>
