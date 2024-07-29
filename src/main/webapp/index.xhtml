@@ -5,7 +5,157 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h1>Hello World!</h1>
-</f:view>
+
+<h:head>
+    <title>MediSupply</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com" type=""></script>
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <!-- Libreria AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"></link>
+    <!-- Iconos -->
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-straight/css/uicons-regular-straight.css'></link>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-rounded/css/uicons-regular-rounded.css'></link>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-rounded/css/uicons-regular-rounded.css'></link>
+</h:head>
+
+<h:body>
+    <f:view>
+        <nav data-aos="fade-down" class="bg-teal-600 bg-opacity-0 fixed top-0 left-0 w-full z-10" id="navbarHomepage">
+            <ul
+                    class="text-white text-lg mx-auto flex flex-col md:flex-row items-center justify-between px-[8rem] gap-5 md:gap-5 py-1">
+
+                <li class="flex flex-row items-center font-bold text-2xl"><img src="resources/img/medisupply.png" alt="loguito" class="w-[5rem]"></img>
+                    MediSupply
+                </li>
+
+                <div class="flex flex-col md:flex-row items-center md:gap-[2rem] gap-5">
+                    <a href="">
+                        <li class="justify-self-end bg-teal-500 hover:bg-teal-600 px-3 py-2 rounded-md hidden md:block" id="navbarBgLi">
+                            Ver Insumos</li>
+                    </a>
+
+                    <a href="">
+                        <li class="hidden md:block bg-black bg-opacity-40 hover:bg-gray-950 px-3 py-2 rounded-md">Ver más acerca de la API</li>
+                    </a>
+                </div>
+            </ul>
+        </nav>
+
+        <div class="hero min-h-screen bg-base-200" style="background-image: url(resources/img/fondoFarmacia.jpg);">
+            <div class="hero-overlay bg-opacity-60 brightness-50 bg-black"></div>
+            <div class="hero-content flex-col lg:flex-row-reverse">
+                <img src="resources/img/medisupply.png" class="max-w-sm" data-aos="fade-right" data-aos-delay="400"  alt=""/>
+                <div data-aos="fade-right" data-aos-delay="400">
+                    <h1 class="md:text-6xl text-5xl font-bold text-zinc-50 md:pt-[5rem]">Bienvenido a MediSupply!</h1>
+                    <p class="py-6 text-zinc-50 text-2xl">Ofrecemos una amplia gama de productos médicos de alta calidad para cuidar de tu salud y bienestar.</p>
+                    <div class="flex gap-5">
+                        <a href="">
+                            <button
+                                    class="btn border-none text-zinc-50 text-lg bg-teal-500 hover:bg-teal-600">Ver Insumos</button>
+                        </a>
+
+                        <a href="">
+                            <button
+                                    class="btn border-none text-zinc-50 text-lg bg-black bg-opacity-40 hover:bg-gray-950">Ver más acerca de la API</button>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white w-full lg:h-[40rem] h-[full]">
+            <h1 class="text-center md:text-6xl text-5xl font-bold text-teal-500 md:pt-[5rem] pt-5">Tu Fuente de Insumos Médicos de Confianza</h1>
+
+            <div class="grid grid-rows-3 lg:grid-cols-3 mt-[6rem] place-items-stretch text-center gap-5 mx-5 md:mx-[10rem] pb-[3rem] lg:pb-0">
+
+                <div class="card bg-zinc-200 py-5 px-5 rounded-box grid flex-grow ">
+                    <h1 class="text-black text-4xl">
+                        <i class="fi fi-rs-head-side-mask"></i>
+                    </h1>
+                    <h1 class="text-black text-2xl font-bold">
+                        Equipos de Protección Personal
+                    </h1>
+                    <p class="text-center">Incluye mascarillas, guantes, batas, gafas de protección y caretas.</p>
+                </div>
+
+                <div class="card bg-zinc-200 py-5 px-5 rounded-box grid flex-grow ">
+                    <h1 class="text-black text-4xl">
+                        <i class="fi fi-rr-capsules"></i>
+                    </h1>
+                    <h1 class="text-black text-2xl font-bold">
+                        Medicamentos y Suplementos
+                    </h1>
+                    <p class="text-center">Incluye medicamentos de venta libre, suplementos vitamínicos, y productos de herbolario o naturista.</p>
+                </div>
+
+                <div class="card bg-zinc-200 py-5 px-5 rounded-box grid flex-grow ">
+                    <h1 class="text-black text-4xl">
+                        <i class="fi fi-rr-bandage-wound"></i>
+                    </h1>
+                    <h1 class="text-black text-2xl font-bold">
+                        Suministros de Cuidado de Heridas
+                    </h1>
+                    <p class="text-center">Como vendajes, gasas, apósitos, esparadrapos, soluciones antisépticas, y otros productos necesarios para el tratamiento y la cicatrización de heridas.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <footer  class="footer footer-center text-white p-5 bg-teal-600 text-primary-content">
+            <aside>
+                <div class="flex flex-row items-center font-bold text-4xl"><img src="resources/img/medisupply.png" alt="loguito" class="w-[5rem]"></img>
+                    MediSupply
+                </div>
+
+                <p class="">Desarrollo con Web Frameworks - Ciclo 2 2024</p>
+                <p class="font-bold mt-2">
+                    Carlos Marcelo Cruz Menjívar | CM232707<br></br>
+                </p>
+                <p class="font-bold">
+                    Eleazar Hazael Amaya Sánchez | AS232697
+                </p>
+
+                <p class="mt-2">Copyright © 2024 - Todos los Derechos Reservados</p>
+            </aside>
+        </footer>
+
+        <!-- Libreria AOS -->
+        <script type="" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script type="">
+            AOS.init();
+        </script>
+
+        <!-- Cambiar Nav Segun Scroll -->
+        <script type="">
+            document.addEventListener("scroll", function(){
+                let navbar = document.getElementById("navbarHomepage");
+                let navbarBgLi =document.getElementById("navbarBgLi");
+
+                if (window.scrollY === 0){
+                    console.log("Scroll en 0");
+
+                    navbar.classList.remove("bg-teal-600");
+                    navbar.classList.add("bg-black", "bg-opacity-0");
+
+                    navbarBgLi.classList.remove("bg-white", "text-black", "hover:bg-zinc-200");
+                    navbarBgLi.classList.add("bg-teal-600", "text-white", "hover:bg-teal-700");
+
+                } else {
+                    console.log("Scroll Activado " + window.scrollY);
+
+                    navbar.classList.remove("bg-black", "bg-opacity-0");
+                    navbar.classList.add("bg-teal-600");
+
+                    navbarBgLi.classList.remove("bg-teal-600", "text-white", "hover:bg-teal-700");
+                    navbarBgLi.classList.add("bg-white", "text-black", "hover:bg-zinc-200");
+                }
+            });
+        </script>
+    </f:view>
+
+</h:body>
 </html>
