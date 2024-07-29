@@ -15,20 +15,11 @@ public class InsumoMedRest {
     InsumoMedDAO insumoMedDAO = new InsumoMedDAO();
 
     @POST // Petición POST agregar nuevo insumo
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("create")
-    public Response addInsumo(
-            @FormParam("nombre") String nombre,
-            @FormParam("cantidad") int cantidad,
-            @FormParam("precio") double precio
-    ) throws SQLException{
-        InsumoMed insumoMed = new InsumoMed();
-
-        insumoMed.setNombre(nombre);
-        insumoMed.setCantidad(cantidad);
-        insumoMed.setPrecio(precio);
+    public Response addInsumo(InsumoMed insumoMed) throws SQLException {
         insumoMedDAO.addInsumo(insumoMed);
-
         return Response.status(201)
                 .header("Access-Control-Allow-Origin", "*")
                 .entity(insumoMed)
@@ -60,35 +51,24 @@ public class InsumoMedRest {
             return Response.status(200).entity(selectedInsumo).build();
         }
 
-    @POST //@ACTUALIZAR | Petición POST para actualizar un insumo existente
-        @Produces(MediaType.APPLICATION_JSON)
-        @Path("update/{id}")
-        public Response updateInsumo(
-                @PathParam("id") int id,
-                @FormParam("nombre") String nombre,
-                @FormParam("cantidad") int cantidad,
-                @FormParam("precio") double precio
-        ) throws SQLException{
+    //@ACTUALIZAR | Petición POST para actualizar un insumo existente
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("update/{id}")
+    public Response updateInsumo(@PathParam("id") int id, InsumoMed insumoMed) throws SQLException {
+        InsumoMedDAO dao = new InsumoMedDAO();
+        InsumoMed existingInsumo = dao.getDetails(id);
 
-        InsumoMed insumoMed = insumoMedDAO.getDetails(id);
-
-        if (insumoMed == null || insumoMed.getId() == 0){
-            return Response.status(404)
-                    .header("Access-Control-Allow-Origin", "*")
-                    .entity("Insumo no encontrado")
-                    .build();
+        if (existingInsumo == null || existingInsumo.getId() == 0) {
+            return Response.status(400)
+                    .entity("El insumo seleccionado no existe").header("Access-Control-Allow-Origin", "*").build();
         }
-
-        insumoMed.setNombre(nombre);
-        insumoMed.setCantidad(cantidad);
-        insumoMed.setPrecio(precio);
-        insumoMedDAO.updateInsumo(insumoMed);
-
+        insumoMed.setId(id);
+        dao.updateInsumo(insumoMed);
         return Response.status(200)
-                .header("Access-Control-Allow-Origin", "*")
-                .entity(insumoMed)
-                .build();
+                .header("Access-Control-Allow-Origin", "*").entity(insumoMed).build();
     }
+
 
     @POST //@DELETE
         @Produces(MediaType.APPLICATION_JSON)

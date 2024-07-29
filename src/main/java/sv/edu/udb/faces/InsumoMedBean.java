@@ -1,6 +1,7 @@
 package sv.edu.udb.faces;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
@@ -19,7 +20,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class InsumoMedBean implements Serializable {
 
     private Client client;
@@ -80,9 +81,14 @@ public class InsumoMedBean implements Serializable {
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(selectedInsumo));
         if (response.getStatus() == 200) {
-            loadInsumos(); // Recargar la lista después de actualizar
+            loadInsumos(); // Recargar la lista después de agregar
             clearForm();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insumo actualizado correctamente", null));
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("insumos.xhtml");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insumo actualizado correctamente", null));
+            } catch (IOException e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al redirigir", null));
+            }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al actualizar insumo", null));
         }
@@ -90,33 +96,52 @@ public class InsumoMedBean implements Serializable {
     }
 
     public void deleteInsumo(int id) {
-        Response response = target.path("delete/" + id)
-                .request(MediaType.APPLICATION_JSON)
-                .post(null);
-        if (response.getStatus() == 200) {
-            loadInsumos(); // Recargar la lista después de eliminar
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al eliminar insumo", null));
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            // Imprimir ID para depuración
+            System.out.println("Attempting to delete insumo with ID: " + id);
+
+            // Realizar solicitud de eliminación
+            Response response = target.path("delete/" + id)
+                    .request(MediaType.APPLICATION_JSON)
+                    .post(null); // Enviar solicitud POST vacía
+
+            // Verificar el estado de la respuesta
+            if (response.getStatus() == 200) {
+                loadInsumos(); // Recargar la lista después de eliminar
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Insumo eliminado correctamente", null));
+            } else {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al eliminar insumo", null));
+            }
+        } catch (Exception e) {
+            // Manejo de excepciones
+            e.printStackTrace();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al eliminar insumo", null));
         }
-        response.close();
     }
 
     public String prepareEdit(int id) {
-        Response response = target.path(String.valueOf(id))
-                .request(MediaType.APPLICATION_JSON)
-                .get();
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            // Obtener el insumo desde la API
+            Response response = target.path(String.valueOf(id))
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
 
-        if (response.getStatus() == 200) {
-            selectedInsumo = response.readEntity(InsumoMed.class);
-            return "editInsumo?faces-redirect=true"; // Redirige a editInsumo.xhtml
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Insumo no encontrado", null));
+            if (response.getStatus() == 200) {
+                selectedInsumo = response.readEntity(InsumoMed.class);
+                context.getExternalContext().getSessionMap().put("selectedInsumo", selectedInsumo);
+                return "editInsumo?faces-redirect=true"; // Redirige a editInsumo.xhtml
+            } else {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Insumo no encontrado", null));
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al preparar edición", null));
             return null;
         }
     }
-
-
-
 
     public void clearForm() {
         selectedInsumo = new InsumoMed(); // Limpia el formulario
