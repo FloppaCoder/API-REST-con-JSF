@@ -87,54 +87,15 @@
                 </table>
             </div>
 
+
                 <!-- Mensaje si no hay registros -->
                 <h:panelGroup rendered="#{empty insumoMedBean.insumos}">
-                    <h:outputText value="#{insumoMedBean.mensajeError}" styleClass="error-message text-red-500 mt-4"/>
+                    <h:outputText value="#{insumoMedBean.mensajeError}" styleClass="flex w-full mx-auto error-message text-red-500 mt-4 text-center items-center font-bold text-xl"/>
                 </h:panelGroup>
             </h:form>
         </div>
 
     </div>
-
-
-
-
-
-    <!-- Botón para redirigir a la página de agregar insumo -->
-    <h:form>
-        <h:commandButton value="Agregar Nuevo Insumo" action="addInsumo.xhtml" />
-
-    <h:dataTable value="#{insumoMedBean.insumos}" var="insumo" border="1">
-        <h:column>
-            <f:facet name="header">ID</f:facet>
-            #{insumo.id}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Nombre</f:facet>
-            #{insumo.nombre}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Cantidad</f:facet>
-            #{insumo.cantidad}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Precio</f:facet>
-            #{insumo.precio}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Acciones</f:facet>
-            <h:commandButton value="Editar" action="#{insumoMedBean.prepareEdit(insumo.id)}"
-                             outcome="editInsumo"/>
-            <h:commandButton value="Eliminar" action="#{insumoMedBean.deleteInsumo(insumo.id)}"/>
-        </h:column>
-    </h:dataTable>
-
-    </h:form>
-
-    <!-- Fila para mostrar el mensaje si no hay registros -->
-    <h:panelGroup rendered="#{empty insumoMedBean.insumos}">
-        <h:outputText value="#{insumoMedBean.mensajeError}" styleClass="error-message" />
-    </h:panelGroup>
 
     <footer  class="footer footer-center text-white p-5 bg-teal-600 text-primary-content">
         <aside>
