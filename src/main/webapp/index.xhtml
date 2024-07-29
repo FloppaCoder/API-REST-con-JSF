@@ -26,19 +26,22 @@
             <ul
                     class="text-white text-lg mx-auto flex flex-col md:flex-row items-center justify-between px-[8rem] gap-5 md:gap-5 py-1">
 
-                <li class="flex flex-row items-center font-bold text-2xl"><img src="resources/img/medisupply.png" alt="loguito" class="w-[5rem]"></img>
-                    MediSupply
-                </li>
+                <h:link outcome="/index.xhtml">
+                    <li class="flex flex-row items-center font-bold text-2xl"><img src="resources/img/medisupply.png"
+                                                                                   alt="loguito" class="w-[5rem]"></img>
+                        MediSupply
+                    </li>
+                </h:link>
 
                 <div class="flex flex-col md:flex-row items-center md:gap-[2rem] gap-5">
-                    <a href="">
+                    <h:link outcome="/insumos.xhtml">
                         <li class="justify-self-end bg-teal-500 hover:bg-teal-600 px-3 py-2 rounded-md hidden md:block" id="navbarBgLi">
                             Ver Insumos</li>
-                    </a>
+                    </h:link>
 
-                    <a href="">
+                    <h:link outcome="/verApi.xhtml">
                         <li class="hidden md:block bg-black bg-opacity-40 hover:bg-gray-950 px-3 py-2 rounded-md">Ver más acerca de la API</li>
-                    </a>
+                    </h:link>
                 </div>
             </ul>
         </nav>
@@ -51,15 +54,15 @@
                     <h1 class="md:text-6xl text-5xl font-bold text-zinc-50 md:pt-[5rem]">Bienvenido a MediSupply!</h1>
                     <p class="py-6 text-zinc-50 text-2xl">Ofrecemos una amplia gama de productos médicos de alta calidad para cuidar de tu salud y bienestar.</p>
                     <div class="flex gap-5">
-                        <a href="">
+                        <h:link outcome="/insumos.xhtml">
                             <button
                                     class="btn border-none text-zinc-50 text-lg bg-teal-500 hover:bg-teal-600">Ver Insumos</button>
-                        </a>
+                        </h:link>
 
-                        <a href="">
+                        <h:link outcome="/verApi.xhtml">
                             <button
                                     class="btn border-none text-zinc-50 text-lg bg-black bg-opacity-40 hover:bg-gray-950">Ver más acerca de la API</button>
-                        </a>
+                        </h:link>
                     </div>
 
                 </div>

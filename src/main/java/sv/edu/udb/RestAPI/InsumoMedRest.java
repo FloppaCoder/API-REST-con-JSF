@@ -97,7 +97,7 @@ public class InsumoMedRest {
             InsumoMedDAO dao = new InsumoMedDAO();
             InsumoMed insumoMed = dao.getDetails(id);
 
-            if(insumoMed == null){
+            if(insumoMed == null || insumoMed.getId() == 0){
                 return Response.status(400)
                         .entity("El insumo seleccionado no existe").header("Access-Control-Allow-Origin", "*").build();
             }
